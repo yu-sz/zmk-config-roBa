@@ -19,7 +19,6 @@
     //         <&kp LEFT_ARROW>,
     //         <&kp UP_ARROW>,
     //         <&kp DOWN_ARROW>;
-
     //     tick = <10>;
     //     wait-ms = <5>;
     //     tap-ms = <5>;
@@ -74,6 +73,24 @@
             #binding-cells = <2>;
             tapping-term-ms = <200>;
         };
+
+        vim_gg_mac: vim_gg_mac {
+            compatible = "zmk,behavior-tap-dance";
+            label = "VIM_GG_MAC";
+            #binding-cells = <0>;
+            bindings = <&vim_caps LG(UP_ARROW) G>, <&kp LG(LC(DOWN_ARROW))>;
+
+            tapping-term-ms = <200>;
+        };
+
+        vim_caps: vim_caps {
+            compatible = "zmk,behavior-hold-tap";
+            label = "VIM_CAPS";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+        };
     };
 
     keymap {
@@ -81,49 +98,45 @@
 
         default_layer {
             bindings = <
-&kp Q             &kp W         &kp E         &kp R                        &kp T                                                          &kp Y        &kp U  &lt 5 I    &kp O    &kp P
-&kp A             &kp S         &kp D         &kp F                        &kp G        &kp LS(LG(S))                      &kp MINUS      &kp H        &kp J  &kp K      &kp L    &kp SQT
-&mt LEFT_SHIFT Z  &kp X         &kp C         &kp V                        &kp B        &kp COLON                          &kp SEMICOLON  &kp N        &kp M  &kp COMMA  &kp DOT  &kp SLASH
-&kp LCTRL         &kp LEFT_WIN  &kp LEFT_ALT  &lt_to_layer_0 6 INT_HENKAN  &lt 2 SPACE  &lt_to_layer_0 3 INT_MUHENKAN      &kp BACKSPACE  &lt 1 ENTER                             &kp DEL
-            >;
-
-            sensor-bindings = <&inc_dec_kp PG_UP PAGE_DOWN>;
-        };
-
-        FUNCTION {
-            bindings = <
-&trans  &trans  &trans  &trans  &trans                       &kp F1  &kp F2  &kp F3  &kp F4  &kp F5
-&trans  &trans  &trans  &trans  &trans  &trans      &kp F13  &kp F6  &kp F7  &kp F8  &kp F9  &kp F10
-&trans  &trans  &trans  &trans  &trans  &trans      &trans   &trans  &trans  &trans  &trans  &kp F11
-&trans  &trans  &trans  &trans  &trans  &trans      &trans   &trans                          &kp F12
+&kp Q           &kp W         &kp E   &kp R                 &kp T                                                                      &kp Y            &kp U  &kp I      &kp O    &kp P
+&kp A           &kp S         &kp D   &kp F                 &kp G         &lt_to_layer_0 6 LANGUAGE_2      &kp LEFT_SHIFT              &kp H            &kp J  &kp K      &kp L    &kp SEMICOLON
+&mt LEFT_ALT Z  &kp X         &kp C   &kp V                 &kp B         &lt_to_layer_0 6 LANGUAGE_1      &kp TAB                     &kp N            &kp M  &kp COMMA  &kp DOT  &kp SLASH
+&kp LEFT_ALT    &kp LEFT_WIN  &tog 3  &mt LEFT_COMMAND TAB  &lt 2 ESCAPE  &mt LEFT_SHIFT SPACE             &mt LC(LEFT_CONTROL) ENTER  &lt 1 BACKSPACE                             &lt_to_layer_0 5 ESCAPE
             >;
         };
 
-        NUM {
+        NUMBERS {
             bindings = <
-&kp MINUS                   &kp KP_NUMBER_7  &kp KP_NUMBER_8  &kp KP_NUMBER_9  &kp PLUS                                                   &kp CARET         &kp AMPERSAND      &kp TILDE       &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS
-&kp SLASH                   &kp KP_NUMBER_4  &kp KP_NUMBER_5  &kp KP_NUMBER_6  &kp ASTERISK  &kp LC(LA(KP_NUMBER_0))      &kp UNDERSCORE  &kp EXCLAMATION   &kp AT_SIGN        &kp HASH        &kp DOLLAR            &kp PERCENT
-&mt LEFT_SHIFT KP_NUMBER_0  &kp KP_NUMBER_1  &kp KP_NUMBER_2  &kp KP_NUMBER_3  &kp PERIOD    &kp EQUAL                    &trans          &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp LEFT_BRACE  &kp RIGHT_BRACE       &kp BACKSLASH
-&trans                      &trans           &trans           &trans           &trans        &trans                       &trans          &trans                                                                     &kp PIPE
+&kp F11  &kp F12  &kp F13  &kp F14  &kp F15                      &kp F1  &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp NUMBER_0
+&kp F6   &kp F7   &kp F8   &kp F9   &kp F10  &trans      &trans  &kp F6  &kp NUMBER_4  &kp NUMBER_5  &kp NUMBER_6  &kp SINGLE_QUOTE
+&kp F1   &kp F2   &kp F3   &kp F4   &kp F5   &trans      &trans  &none   &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp BACKSPACE
+&trans   &trans   &trans   &trans   &trans   &trans      &trans  &trans                                            &trans
+            >;
+        };
+
+        SYMBOLS {
+            bindings = <
+&kp EXCLAMATION  &kp AT_SIGN      &kp HASH       &kp DOLLAR  &kp PLUS                       &kp CARET       &kp AMPERSAND  &kp ASTERISK      &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS
+&trans           &kp HOME         &kp PAGE_UP    &kp K_MUTE  &trans     &trans      &trans  &kp MINUS       &kp PLUS       &kp LEFT_BRACKET  &kp RIGHT_BRACKET     &kp BACKSLASH
+&trans           &kp KP_NUMBER_1  &kp PAGE_DOWN  &kp GRAVE   &kp TILDE  &trans      &trans  &kp UNDERSCORE  &kp EQUAL      &kp LEFT_BRACE    &kp RIGHT_BRACE       &kp PIPE
+&trans           &trans           &trans         &trans      &trans     &trans      &trans  &trans                                                                 &trans
             >;
         };
 
         ARROW {
             bindings = <
-&kp ESCAPE      &kp LC(LS(TAB))         &kp UP_ARROW    &kp LC(TAB)              &trans                       &trans  &trans  &trans  &trans  &trans
-&kp HOME        &kp LEFT_ARROW          &kp DOWN_ARROW  &kp RIGHT_ARROW          &kp END  &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&kp LEFT_SHIFT  &kp LG(LS(LEFT_ARROW))  &trans          &kp LG(LS(RIGHT_ARROW))  &trans   &trans      &trans  &trans  &trans  &trans  &trans  &trans
-&trans          &trans                  &trans          &trans                   &trans   &trans      &trans  &trans                          &trans
+&trans  &trans  &kp LA(RIGHT_ARROW)  &kp LC(E)  &trans                                       &kp LG(C)  &trans          &to 0         &trans           &kp LC(A)
+&trans  &trans  &kp LG(D)            &trans     &vim_gg_mac  &trans                  &trans  &kp LEFT   &kp DOWN_ARROW  &kp UP_ARROW  &kp RIGHT_ARROW  &trans
+&trans  &trans  &trans               &trans     &trans       &kp LA(LEFT_ARROW)      &trans  &trans     &trans          &trans        &trans           &trans
+&trans  &trans  &trans               &trans     &none        &trans                  &trans  &none                                                     &trans
             >;
-
-            sensor-bindings = <&inc_dec_kp LC(PAGE_UP) LC(PAGE_DOWN)>;
         };
 
         MOUSE {
             bindings = <
 &trans  &trans  &trans  &trans  &trans                      &trans  &trans    &trans    &trans    &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &mkp MB1  &mkp MB3  &mkp MB2  &trans
-&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &trans    &trans    &trans    &trans
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &mkp MB1  &mkp MB3  &mkp MB2  &mo 5
+&trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans  &mkp MB4  &mkp MB5  &trans    &trans
 &trans  &trans  &trans  &trans  &trans  &trans      &trans  &trans                                &trans
             >;
         };
